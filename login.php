@@ -52,6 +52,9 @@ session_start();
         <button type="submit" class="btn btn-primary">
             Se connecter
         </button>
+        <a href="/sport-news-crud/register.php" class="btn btn-success ms-2">
+    Créer un compte
+</a>
 
     </form>
 
