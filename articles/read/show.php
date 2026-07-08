@@ -1,5 +1,6 @@
 <?php
 
+
 require_once '../../config/database.php';
 
 if (!isset($_GET['id'])) {
@@ -54,6 +55,8 @@ if (!$article) {
 </head>
 
 <body>
+   
+
 
 <main class="container my-5">
 
