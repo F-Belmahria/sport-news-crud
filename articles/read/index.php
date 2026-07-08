@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once '../../config/database.php';
 
@@ -39,7 +42,39 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
+     <?php
+   if (isset($_SESSION['LOGGED_USER']) && !isset($_SESSION['MODAL_SHOWN'])) :
+     $_SESSION['MODAL_SHOWN'] = true;
+        ?>
+         <!-- Modale Bootstrap (popup) -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- En-tête de la modale -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                           Bonjour <?= htmlspecialchars($_SESSION['LOGGED_USER']['prenom']) ?>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
+                    <!-- Corps de la modale -->
+                    <div class="modal-body">
+                        Bienvenue sur le site de l'équipe ! <br>
+                        Vous avez à présent accès aux articles et résultats sportifs.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        myModal.show();
+    });
+</script>
+<?php endif; ?>
     <main class="container my-5">
 
         <div class="text-center mb-4">
