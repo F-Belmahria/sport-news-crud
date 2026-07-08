@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'prenom' => $user['prenom']
                 ];
 
-                header('Location: /sport-news-crud/articles/show.php');
+                header('Location: /sport-news-crud/articles/read/show.php');
                 exit;
 
             } else {
