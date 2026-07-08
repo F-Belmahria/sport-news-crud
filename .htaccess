@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /sport-news-crud/
+# Page d'accueil du projet
+DirectoryIndex articles/read/index.php
+RewriteRule ^article/([0-9]+)\.html$ articles/read/show.php?id=$1 [L,QSA]
+# Modifier un article
+RewriteRule ^article/([0-9]+)/modifier\.html$ articles/update/edit.php?id=$1 [L,QSA]
+
+# Supprimer un article
+RewriteRule ^article/([0-9]+)/supprimer\.html$ articles/delete/delete.php?id=$1 [L,QSA]
