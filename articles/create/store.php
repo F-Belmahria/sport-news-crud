@@ -1,5 +1,12 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+if (!isset($_SESSION['LOGGED_USER'])) {
+    header('Location: /sport-news-crud/articles/login.php');
+    exit;
+}
 require_once '../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
