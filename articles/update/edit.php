@@ -1,4 +1,5 @@
 <?php
+
 require_once '../../config/database.php';
 
 $getData = $_GET;
