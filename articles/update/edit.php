@@ -1,5 +1,12 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+if (!isset($_SESSION['LOGGED_USER'])) {
+    header('Location: /sport-news-crud/login.php');
+    exit;
+}
 require_once '../../config/database.php';
 
 $getData = $_GET;
@@ -39,6 +46,7 @@ $matches = $requeteMatches->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
+    <?php require_once '../../includes/header.php'; ?>
     <main class="container my-5">
 
     <h1 class="mb-4">Modifier l'article</h1>
@@ -138,5 +146,6 @@ $matches = $requeteMatches->fetchAll(PDO::FETCH_ASSOC);
 
     </form>
 </main>
+<?php require_once '../../includes/footer.php'; ?>
 </body>
 </html>
