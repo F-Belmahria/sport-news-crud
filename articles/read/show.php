@@ -65,13 +65,19 @@ if (!$article) {
     </a>
 
     <div class="card shadow-sm border-0">
+<?php
+$image = 'default.png';
 
-        <img 
-            src="/sport-news-crud/assets/images/<?= htmlspecialchars($article['image']) ?>" 
-            class="card-img-top"
-            alt="Image de l'article"
-        >
+if (!empty($article['image']) && file_exists(__DIR__ . '/../../assets/images/' . $article['image'])) {
+    $image = $article['image'];
+}
+?>
 
+<img 
+    src="/sport-news-crud/assets/images/<?= htmlspecialchars($image) ?>" 
+    class="card-img-top" 
+    alt="Image de l'article"
+>
         <div class="card-body">
 
             <span class="badge bg-light text-dark mb-3">
