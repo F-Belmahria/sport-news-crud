@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['LOGGED_USER'])) {
-    header('Location: /sport-news-crud/articles/login.php');
+    header('Location: /sport-news-crud/login.php');
     exit;
 }
 require_once '../../config/database.php';
@@ -82,7 +82,7 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
             Enregistrer l'article
         </button>
 
-        <a href="/sport-news-crud/articles/index.php" class="btn btn-outline-secondary">
+        <a href="/sport-news-crud" class="btn btn-outline-secondary">
             Retour
         </a>
 
