@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['LOGGED_USER'])) {
-    header('Location: /sport-news-crud/articles/login.php');
+    header('Location: /sport-news-crud/login.php');
     exit;
 }
 require_once '../../config/database.php';
