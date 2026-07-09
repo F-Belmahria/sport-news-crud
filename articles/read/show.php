@@ -54,11 +54,11 @@ if (!$article) {
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 
-<body>
-   
+<body class="d-flex flex-column min-vh-100">
+   <?php require_once '../../includes/header.php'; ?>
 
 
-<main class="container my-5">
+<main class="container my-5 flex-grow-1">
 
     <a href="/sport-news-crud/articles/read/index.php"class="btn btn-outline-secondary mb-4">
         Retour aux articles
@@ -118,12 +118,12 @@ if (!$article) {
 
         <div class="card-footer bg-white border-0 d-flex justify-content-between">
 
-            <a href="../update/edit.php?id=<?= $article['article_id'] ?>" class="btn btn-primary">
+            <a href="/sport-news-crud/articles/update/edit.php?id=<?= $article['article_id'] ?>" class="btn btn-primary">
                 Modifier
             </a>
 
             <a 
-                href="../delete/delete.php?id=<?= $article['article_id'] ?>" 
+                href="/sport-news-crud/articles/delete/delete.php?id=<?= $article['article_id'] ?>" 
                 class="btn btn-danger"
               
             >
@@ -135,6 +135,6 @@ if (!$article) {
     </div>
 
 </main>
-
+<?php require_once '../../includes/footer.php'; ?>
 </body>
 </html>
