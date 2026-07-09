@@ -62,7 +62,7 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
         <div class="mb-3">
             <label for="match_id" class="form-label">Match concerné</label>
 
-            <select name="match_id" id="match_id" class="form-select" required>
+            <select name="match_id" id="match_id" class="form-select" >
                 <option value="">Choisir un match</option>
 
                 <?php foreach ($matches as $match) : ?>
@@ -77,7 +77,53 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
 
             </select>
         </div>
+<div class="from-check mb-3">
+     <input 
+                class="form-check-input" 
+                type="checkbox" 
+                name="ajouter_match" 
+                id="ajouter_match"
+                value="1"
+            >
 
+            <label class="form-check-label" for="ajouter_match">
+                Ajouter un nouveau match
+            </label>
+        </div>
+
+        <div id="nouveau_match" class="border rounded p-3 mb-3 d-none">
+            <h2 class="h5 mb-3">Informations du nouveau match</h2>
+
+            <div class="mb-3">
+                <label for="equipe1" class="form-label">Équipe 1</label>
+                <input type="text" name="equipe1" id="equipe1" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="equipe2" class="form-label">Équipe 2</label>
+                <input type="text" name="equipe2" id="equipe2" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="score" class="form-label">Score</label>
+                <input type="text" name="score" id="score" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="lieu" class="form-label">Lieu</label>
+                <input type="text" name="lieu" id="lieu" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="date_match" class="form-label">Date du match</label>
+                <input type="date" name="date_match" id="date_match" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="resume" class="form-label">Résumé du match</label>
+                <textarea name="resume" id="resume" class="form-control" rows="3"></textarea>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">
             Enregistrer l'article
         </button>
@@ -90,5 +136,18 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 </main>
 <?php require_once '../../includes/footer.php'; ?>
+<script>
+    const checkboxMatch = document.getElementById('ajouter_match');
+    const blocNouveauMatch = document.getElementById('nouveau_match');
+
+    checkboxMatch.addEventListener('change', function () {
+        if (checkboxMatch.checked) {
+            blocNouveauMatch.classList.remove('d-none');
+        } else {
+            blocNouveauMatch.classList.add('d-none');
+        }
+    });
+</script>
+
 </body>
 </html>
