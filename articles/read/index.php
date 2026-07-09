@@ -42,6 +42,7 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
+    <?php require_once '../../includes/header.php'; ?>
      <?php
    if (isset($_SESSION['LOGGED_USER']) && !isset($_SESSION['MODAL_SHOWN'])) :
      $_SESSION['MODAL_SHOWN'] = true;
@@ -75,12 +76,18 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
     });
 </script>
 <?php endif; ?>
+
     <main class="container my-5">
 
         <div class="text-center mb-4">
-            <a href="../create/create.php" class="btn btn-outline-primary">
-                Ajouter un nouvel article
-            </a>
+            <a 
+    href="<?= isset($_SESSION['LOGGED_USER']) 
+        ? '/sport-news-crud/articles/create/create.php' 
+        : '/sport-news-crud/login.php' ?>" 
+    class="btn btn-outline-primary"
+>
+    Ajouter un nouvel article
+</a>
         </div>
 
         <div class="row g-4">
@@ -127,12 +134,12 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 </a>
 
                             <div>
-                                <a href="../update/edit.php?id=<?= $article['article_id'] ?>" class="btn btn-light btn-sm">
+                                <a href="/sport-news-crud/articles/update/edit.php?id=<?= $article['article_id'] ?>" class="btn btn-light btn-sm">
                                      <i class="fa-solid fa-pen"></i>
                                 </a>
 
                                 <a 
-                                    href="../delete/delete.php?id=<?= $article['article_id'] ?>" 
+                                   href="/sport-news-crud/articles/delete/delete.php?id=<?= $article['article_id'] ?>"
                                     class="btn btn-light btn-sm"
                                     
                                 >
@@ -150,6 +157,6 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
     </main>
-
+<?php require_once '../../includes/footer.php'; ?>
 </body>
 </html>
