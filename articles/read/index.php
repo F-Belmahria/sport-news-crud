@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once '../../config/database.php';
-
+require_once '../../includes/functions.php';
 $sql = "
     SELECT 
         articles.id AS article_id,
@@ -96,13 +96,19 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="card h-100 shadow-sm">
+<?php
+$image = 'default.png';
 
-                        <img 
-                            src="/sport-news-crud/assets/images/<?= htmlspecialchars($article['image']) ?>" 
-                            class="card-img-top" 
-                            alt="Image de l'article"
-                        >
+if (!empty($article['image']) && file_exists(__DIR__ . '/../../assets/images/' . $article['image'])) {
+    $image = $article['image'];
+}
+?>
 
+<img 
+    src="/sport-news-crud/assets/images/<?= htmlspecialchars($image) ?>" 
+    class="card-img-top" 
+    alt="Image de l'article"
+>
                         <div class="card-body">
 
                             <span class="badge bg-light text-dark mb-2">
@@ -122,7 +128,7 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
                             </p>
 
                             <p class="card-text">
-                                <?= htmlspecialchars(substr($article['contenu'], 0, 100)) ?>...
+                                <?= htmlspecialchars(truncateString($article['contenu'], 100)) ?>
                             </p>
 
                         </div>
