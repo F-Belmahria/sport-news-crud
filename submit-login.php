@@ -44,15 +44,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                  * On stocke les infos de l'utilisateur en session.
                  * On ne stocke jamais le mot de passe.
                  */
-                $_SESSION['LOGGED_USER'] = [
-                    'id' => $user['id'],
-                    'email' => $user['email'],
-                    'nom' => $user['nom'],
-                    'prenom' => $user['prenom']
-                ];
+             $_SESSION['LOGGED_USER'] = [
+    'id' => $user['id'],
+    'email' => $user['email'],
+    'nom' => $user['nom'],
+    'prenom' => $user['prenom']
+];
+// Je sécurise la session quand l'utilisateur est connecté
+session_regenerate_id(true);
 
-                header('Location: /sport-news-crud/articles/read/show.php');
-                exit;
+header('Location: /sport-news-crud/');
+exit;
+
+   
 
             } else {
 
