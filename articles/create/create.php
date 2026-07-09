@@ -27,7 +27,7 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-
+<?php require_once '../../includes/header.php'; ?>
 <main class="container my-5">
 
     <h1 class="mb-4">Ajouter un nouvel article</h1>
@@ -89,6 +89,6 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
     </form>
 
 </main>
-
+<?php require_once '../../includes/footer.php'; ?>
 </body>
 </html>
