@@ -32,7 +32,7 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
 
     <h1 class="mb-4">Ajouter un nouvel article</h1>
 
-    <form action="store.php" method="POST">
+    <form action="store.php" method="POST" enctype ="multipart/form-data">
 
         <div class="mb-3">
             <label for="titre" class="form-label">Titre de l'article</label>
@@ -51,7 +51,7 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="mb-3">
             <label for="image" class="form-label">Nom de l'image</label>
-            <input type="text" name="image" id="image" class="form-control" placeholder="exemple : psg.png" required>
+            <input type="file" name="image" id="image" class="form-control" accept="image/png, image/jpeg, image/webp" required>
         </div>
 
         <div class="mb-3">
