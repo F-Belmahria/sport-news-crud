@@ -29,6 +29,7 @@ $id = (int) $getData['id'];
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
+    <?php require_once '../../includes/header.php'; ?>
     <main class="container my-5">
 
     <h1 class="mb-4">Supprimer l'article</h1>
@@ -64,5 +65,6 @@ $id = (int) $getData['id'];
     </form>
 
 </main>
+<?php require_once '../../includes/footer.php'; ?>
 </body>
 </html>
