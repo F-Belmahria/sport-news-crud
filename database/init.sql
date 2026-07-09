@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 08, 2026 at 06:57 AM
+-- Generation Time: Jul 09, 2026 at 09:44 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.2.14
 
@@ -74,6 +74,29 @@ INSERT INTO `matches` (`id`, `equipe1`, `equipe2`, `score`, `lieu`, `date_match`
 (3, 'Real Madrid', 'Barcelone', ' 3-1', 'Madrid', '2025-04-12', 'Le Real Madrid s’impose dans un grand classique du football espagnol.'),
 (4, 'Los Angeles Lakers', 'Chicago Bulls', '0-1', ' Los Angeles', '2025-05-08', ' Les Lakers remportent un match intense face aux Bulls après une fin de rencontre très disputée.');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `nom` varchar(100) NOT NULL DEFAULT '',
+  `prenom` varchar(100) NOT NULL DEFAULT '',
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `nom`, `prenom`, `password`) VALUES
+(1, 'admin@test.com', 'Belmahria', 'Faten', '$2y$10$SLNEcd9Wio2/WHDdvelmE.2vGEJZVrGnobPjVRAVNu9eGW55P.Yb.'),
+(2, 'belmahriafatenn@gmail.com', 'Faten', 'Belamhria', '$2y$10$xlIZtSHFWypw6.CrW6ZPa.QTYxF4zOcZhdMIC9uWq1wH.22/pwe4S'),
+(3, 'juliabannani@gmail.com', 'Julia', 'bannani', '$2y$10$p/KzAPp98hMl2773Je7TVupgl9rUyJOsKm0YTtgSdkC1hz4lY5f3y');
+
 --
 -- Indexes for dumped tables
 --
@@ -92,6 +115,13 @@ ALTER TABLE `matches`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -106,6 +136,12 @@ ALTER TABLE `articles`
 --
 ALTER TABLE `matches`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
