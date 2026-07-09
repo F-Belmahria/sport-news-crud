@@ -14,6 +14,8 @@ session_start();
 <body>
 
 <main class="container my-5">
+     
+         
    <?php if (!empty($_SESSION['LOGIN_ERROR_MESSAGE'])) : ?>
         <div class="alert alert-danger">
             <?= htmlspecialchars($_SESSION['LOGIN_ERROR_MESSAGE']) ?>
@@ -21,8 +23,7 @@ session_start();
 
         <?php unset($_SESSION['LOGIN_ERROR_MESSAGE']); ?>
     <?php endif; ?>
-    
-    
+   
  <form action="/sport-news-crud/submit-login.php" method="POST" class="w-50">
 
         <div class="mb-3">
