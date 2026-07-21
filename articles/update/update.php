@@ -4,11 +4,11 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['LOGGED_USER'])) {
-    header('Location: /sport-news-crud/login.php');
+    header('Location: /sport-news-crud/index.php?page=login');
     exit;
 }
 
-require_once '../../config/database.php';
+require_once __DIR__ . '/../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 
     // Après la modification, je retourne vers la page qui affiche les articles
-    header('Location: ../read/index.php');
-    exit;
+   header('Location: /sport-news-crud/index.php?page=articles');
+exit;
+   
 }

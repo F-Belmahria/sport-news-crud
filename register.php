@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ) {
         $_SESSION['REGISTER_ERROR_MESSAGE'] = "Tous les champs sont obligatoires.";
 
-        header('Location: /sport-news-crud/register.php');
+       header('Location: /sport-news-crud/index.php?page=register');
         exit;
     }
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['REGISTER_ERROR_MESSAGE'] = "Il faut saisir un email valide.";
 
-        header('Location: /sport-news-crud/register.php');
+       header('Location: /sport-news-crud/index.php?page=register');
         exit;
     }
 
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user) {
         $_SESSION['REGISTER_ERROR_MESSAGE'] = "Cet email est déjà utilisé.";
 
-        header('Location: /sport-news-crud/register.php');
+        header('Location: /sport-news-crud/index.php?page=register');
         exit;
     }
 
@@ -72,29 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $_SESSION['REGISTER_SUCCESS_MESSAGE'] = "Inscription réussie.";
 
-    header('Location: /sport-news-crud/login.php');
+    header('Location: /sport-news-crud/index.php?page=login');
     exit;
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Mon CSS -->
-    <link rel="stylesheet" href="/sport-news-crud/assets/css/style.css">
-</head>
-
-<body class="d-flex flex-column min-vh-100">
-
-<?php require_once __DIR__ . '/includes/header.php'; ?>
 
 <main class="container my-5 flex-grow-1">
 
@@ -173,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <p class="text-center mt-3 mb-0">
                         Déjà un compte ?
-                        <a href="/sport-news-crud/login.php">
+                        <a href="/sport-news-crud/index.php?page=login">
                             Se connecter
                         </a>
                     </p>
@@ -186,8 +168,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </main>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>

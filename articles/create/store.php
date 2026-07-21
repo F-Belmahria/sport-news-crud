@@ -4,10 +4,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['LOGGED_USER'])) {
-    header('Location: /sport-news-crud/login.php');
+    header('Location: /sport-news-crud/index.php?page=login');
     exit;
 }
-require_once '../../config/database.php';
+require_once __DIR__ . '/../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -77,7 +77,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
    if ($typeMime === "image/jpeg" || $typeMime === "image/png") {
 
         // Je choisis le dossier où l'image sera enregistrée
-        $dossier = "../../assets/images/";
+        $dossier = __DIR__ . '/../../assets/images/';
 
         // Je donne un nom à l'image avec l'id de l'article
         // Exemple : si l'article a l'id 5, l'image sera 5.jpg
@@ -100,11 +100,12 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         }
 
     } else {
-        echo "Erreur : seul le format JPG est accepté.";
+        echo "Erreur : seul le format JPG et PNG son  accepté.";
         exit;
     }
 }
     // Après l'ajout, je retourne vers la page qui affiche les articles
-    header('Location: ../read/index.php');
-    exit;
+   header('Location: /sport-news-crud/index.php?page=articles');
+exit;
+   
 }

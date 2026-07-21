@@ -4,10 +4,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['LOGGED_USER'])) {
-    header('Location: /sport-news-crud/login.php');
+    header('Location: /sport-news-crud/index.php?page=login');
     exit;
 }
-require_once '../../config/database.php';
+require_once __DIR__ . '/../../config/database.php';
 
 $getData = $_GET;
 if (!isset($getData['id']) || !is_numeric($getData['id'])) {
@@ -35,25 +35,14 @@ $requeteMatches = $pdo->query($sqlMatches);
 
 $matches = $requeteMatches->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Modifier un article</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-</head>
-<body class="d-flex flex-column min-vh-100">
-    <?php require_once '../../includes/header.php'; ?>
-    <main class="container my-5">
+    <main class="container my-5 flex-grow-1">
 
     <h1 class="mb-4">Modifier l'article</h1>
-    <form action="update.php" method="post">
+    <form action="/sport-news-crud/articles/update/update.php" method="post">
         
         <!-- Je garde l'id de l'article dans un champ caché -->
-        <input type="hidden" name="id" value="<?= htmlspecialchars($article['id']) ?>">
+        <input type="hidden" name="id" value="<?= (int) $article['id'] ?>">
 
         <div class="mb-3">
             <label for="titre" class="form-label">Titre de l'article</label>
@@ -122,8 +111,8 @@ $matches = $requeteMatches->fetchAll(PDO::FETCH_ASSOC);
 
                 <?php foreach ($matches as $match) : ?>
                     <option 
-                        value="<?= $match['id'] ?>"
-                        <?= $match['id'] == $article['match_id'] ? 'selected' : '' ?>
+                        value="<?= (int) $match['id'] ?>"
+                        <?= (int) $match['id'] == (int) $article['match_id'] ? 'selected' : '' ?>
                     >
                         <?= htmlspecialchars($match['equipe1']) ?>
                         -
@@ -140,12 +129,9 @@ $matches = $requeteMatches->fetchAll(PDO::FETCH_ASSOC);
             Enregistrer les modifications
         </button>
 
-        <a href="../read/index.php" class="btn btn-outline-secondary">
+        <a href="/sport-news-crud/index.php?page=articles" class="btn btn-outline-secondary">
             Retour
         </a>
 
     </form>
 </main>
-<?php require_once '../../includes/footer.php'; ?>
-</body>
-</html>

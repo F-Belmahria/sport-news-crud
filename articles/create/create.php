@@ -4,10 +4,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['LOGGED_USER'])) {
-    header('Location: /sport-news-crud/login.php');
+      header('Location: /sport-news-crud/index.php?page=login');
     exit;
 }
-require_once '../../config/database.php';
+require_once __DIR__ . '/../../config/database.php';
 
    $sql = "SELECT * FROM matches ORDER BY date_match DESC";
 
@@ -16,23 +16,12 @@ $requete = $pdo->query($sql);
 $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Ajouter un article</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-</head>
-
-<body>
-<?php require_once '../../includes/header.php'; ?>
-<main class="container my-5">
+<main class="container my-5 flex-grow-1">
 
     <h1 class="mb-4">Ajouter un nouvel article</h1>
 
-    <form action="store.php" method="POST" enctype ="multipart/form-data">
+    <form action="/sport-news-crud/articles/create/store.php" method="POST" enctype ="multipart/form-data">
 
         <div class="mb-3">
             <label for="titre" class="form-label">Titre de l'article</label>
@@ -77,7 +66,7 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
 
             </select>
         </div>
-<div class="from-check mb-3">
+<div class="form-check mb-3">
      <input 
                 class="form-check-input" 
                 type="checkbox" 
@@ -128,14 +117,14 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
             Enregistrer l'article
         </button>
 
-        <a href="/sport-news-crud" class="btn btn-outline-secondary">
+        <a href="/sport-news-crud/index.php?page=articles" class="btn btn-outline-secondary">
             Retour
         </a>
 
     </form>
 
 </main>
-<?php require_once '../../includes/footer.php'; ?>
+
 <script>
     const checkboxMatch = document.getElementById('ajouter_match');
     const blocNouveauMatch = document.getElementById('nouveau_match');
@@ -149,5 +138,3 @@ $matches = $requete->fetchAll(PDO::FETCH_ASSOC);
     });
 </script>
 
-</body>
-</html>

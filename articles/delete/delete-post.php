@@ -1,48 +1,35 @@
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 if (!isset($_SESSION['LOGGED_USER'])) {
-    header('Location: /sport-news-crud/login.php');
+    header('Location: /sport-news-crud/index.php?page=login');
     exit;
 }
-require_once '../../config/database.php';
-$postData = $_POST;
-if (!isset($postData['id']) || !is_numeric($postData['id'])) {
+
+require_once __DIR__ . '/../../config/database.php';
+
+if (
+    !isset($_POST['id']) ||
+    !is_numeric($_POST['id'])
+) {
     echo "Il faut un identifiant valide pour supprimer un article.";
-    exit;}
-    $id = (int) $postData['id'];
+    exit;
+}
+
+$id = (int) $_POST['id'];
+
 $sql = "DELETE FROM articles WHERE id = :id";
+
 $deleteArticleStatement = $pdo->prepare($sql);
-$deleteArticleStatement->execute(['id' => $id]);
-header('Location: ../read/index.php');
+
+$deleteArticleStatement->execute([
+    'id' => $id
+]);
+// Message enregistré dans la session
+$_SESSION['DELETE_SUCCESS_MESSAGE'] =
+    "L'article a été supprimé avec succès.";
+header('Location: /sport-news-crud/index.php?page=articles');
 exit;
-?>
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Article supprimé</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-</head>
-
-<body>
-
-<main class="container my-5">
-
-    <div class="alert alert-success">
-        L'article a été supprimé avec succès.
-    </div>
-
-    <a class="btn btn-primary" href="../read/index.php">
-        Retour à la liste des articles
-    </a>
-
-</main>
-
-</body>
-</html>

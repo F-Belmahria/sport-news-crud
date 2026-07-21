@@ -6,5 +6,5 @@ session_start();
 session_destroy();
 
 // Je redirige l'utilisateur vers la page de connexion
-header('Location: /sport-news-crud/login.php');
+header('Location: /sport-news-crud/index.php?page=login');
 exit;

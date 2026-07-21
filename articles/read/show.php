@@ -1,10 +1,11 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
-
-require_once '../../config/database.php';
-
+require_once __DIR__ . '/../../config/database.php';
 if (!isset($_GET['id'])) {
-    header('Location: index.php');
+    header('Location: /sport-news-crud/index.php?page=articles');
     exit;
 }
 
@@ -44,23 +45,12 @@ if (!$article) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?= htmlspecialchars($article['titre']) ?></title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-</head>
-
-<body class="d-flex flex-column min-vh-100">
-   <?php require_once '../../includes/header.php'; ?>
 
 
 <main class="container my-5 flex-grow-1">
 
-    <a href="/sport-news-crud/articles/read/index.php"class="btn btn-outline-secondary mb-4">
+    <a href="/sport-news-crud/index.php?page=articles"
+    class="btn btn-outline-secondary mb-4">
         Retour aux articles
     </a>
 
@@ -121,26 +111,27 @@ if (!empty($article['image']) && file_exists(__DIR__ . '/../../assets/images/' .
             </p>
 
         </div>
+<?php if (isAdmin()) : ?>
 
-        <div class="card-footer bg-white border-0 d-flex justify-content-between">
+    <div class="card-footer bg-white border-0 d-flex justify-content-between">
 
-            <a href="/sport-news-crud/articles/update/edit.php?id=<?= $article['article_id'] ?>" class="btn btn-primary">
-                Modifier
-            </a>
+        <a
+            href="/sport-news-crud/index.php?page=edit&id=<?= (int) $article['article_id'] ?>"
+            class="btn btn-primary"
+        >
+            Modifier
+        </a>
 
-            <a 
-                href="/sport-news-crud/articles/delete/delete.php?id=<?= $article['article_id'] ?>" 
-                class="btn btn-danger"
-              
-            >
-                Supprimer
-            </a>
-
-        </div>
+        <a
+            href="/sport-news-crud/index.php?page=delete&id=<?= (int) $article['article_id'] ?>"
+            class="btn btn-danger"
+        >
+            Supprimer
+        </a>
 
     </div>
 
+<?php endif; ?>
+    </div>
+
 </main>
-<?php require_once '../../includes/footer.php'; ?>
-</body>
-</html>

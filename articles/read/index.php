@@ -1,10 +1,12 @@
+
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../../config/database.php';
-require_once '../../includes/functions.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../includes/functions.php';
 $sql = "
     SELECT 
         articles.id AS article_id,
@@ -28,21 +30,7 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Articles sportifs</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Mon CSS -->
-    <link rel="stylesheet" href="../../assets/css/style.css">
-</head>
-
-<body>
-    <?php require_once '../../includes/header.php'; ?>
      <?php
    if (isset($_SESSION['LOGGED_USER']) && !isset($_SESSION['MODAL_SHOWN'])) :
      $_SESSION['MODAL_SHOWN'] = true;
@@ -67,7 +55,7 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -77,18 +65,45 @@ $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 </script>
 <?php endif; ?>
 
-    <main class="container my-5">
+    <main class="container my-5  flex-grow-1">
+        <?php if (!empty($_SESSION['DELETE_SUCCESS_MESSAGE'])) : ?>
+
+    <div class="alert alert-success">
+        <?= htmlspecialchars(
+            $_SESSION['DELETE_SUCCESS_MESSAGE'],
+            ENT_QUOTES,
+            'UTF-8'
+        ) ?>
+    </div>
+
+    <?php unset($_SESSION['DELETE_SUCCESS_MESSAGE']); ?>
+
+<?php endif; ?>
 
         <div class="text-center mb-4">
-            <a 
-    href="<?= isset($_SESSION['LOGGED_USER']) 
-        ? '/sport-news-crud/articles/create/create.php' 
-        : '/sport-news-crud/login.php' ?>" 
-    class="btn btn-outline-primary"
->
-    Ajouter un nouvel article
-</a>
-        </div>
+
+    <?php if (isAdmin()) : ?>
+
+
+        <a
+            href="/sport-news-crud/index.php?page=create"
+            class="btn btn-outline-primary"
+        >
+            Ajouter un nouvel article
+        </a>
+
+    <?php elseif (!isset($_SESSION['LOGGED_USER'])) : ?>
+
+        <a
+            href="/sport-news-crud/index.php?page=login"
+            class="btn btn-outline-primary"
+        >
+            Ajouter un nouvel article
+        </a>
+
+    <?php endif; ?>
+
+</div>
 
         <div class="row g-4">
 
@@ -134,25 +149,28 @@ if (!empty($article['image']) && file_exists(__DIR__ . '/../../assets/images/' .
                         </div>
 
                         <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                            
 
-                            <a href="/sport-news-crud/article/<?= $article['article_id'] ?>.html" class="btn btn-primary btn-sm">
+                            <a href="/sport-news-crud/index.php?page=show&id=<?= (int) $article['article_id'] ?>" class="btn btn-primary btn-sm">
     Voir l'article
 </a>
+<?php if (isAdmin()) : ?>
+
 
                             <div>
-                                <a href="/sport-news-crud/articles/update/edit.php?id=<?= $article['article_id'] ?>" class="btn btn-light btn-sm">
+                                <a href="/sport-news-crud/index.php?page=edit&id=<?= (int) $article['article_id'] ?>" class="btn btn-light btn-sm">
                                      <i class="fa-solid fa-pen"></i>
                                 </a>
 
                                 <a 
-                                   href="/sport-news-crud/articles/delete/delete.php?id=<?= $article['article_id'] ?>"
+                                   href="/sport-news-crud/index.php?page=delete&id=<?= (int) $article['article_id'] ?>"
                                     class="btn btn-light btn-sm"
                                     
                                 >
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>
-
+<?php endif; ?>
                         </div>
 
                     </div>
@@ -163,6 +181,3 @@ if (!empty($article['image']) && file_exists(__DIR__ . '/../../assets/images/' .
         </div>
 
     </main>
-<?php require_once '../../includes/footer.php'; ?>
-</body>
-</html>

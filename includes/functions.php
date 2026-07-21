@@ -18,4 +18,23 @@ function truncateString($text, $limit = 100)
     // Les trois points montrent que le texte continue
     return substr($text, 0, $limit) . '...';
 }
+function isAdmin(): bool
+{
+    return isset($_SESSION['LOGGED_USER'])
+        && isset($_SESSION['LOGGED_USER']['role'])
+        && $_SESSION['LOGGED_USER']['role'] === 'admin';
+}
+
+function requireAdmin(): void
+{
+    if (!isAdmin()) {
+        $_SESSION['ACCESS_ERROR_MESSAGE'] =
+            "Cette action est réservée aux administrateurs.";
+
+        header(
+            'Location: /sport-news-crud/index.php?page=articles'
+        );
+        exit;
+    }
+}
 ?>
