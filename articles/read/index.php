@@ -7,6 +7,46 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../includes/functions.php';
+// Nombre d'articles affichés sur chaque page
+$articlesParPage = 4;
+
+// Récupérer le numéro de la page dans l'URL : &p=1
+$pageActuelle = filter_input(
+    INPUT_GET,
+    'p',
+    FILTER_VALIDATE_INT
+);
+
+// Si le numéro est absent ou incorrect, afficher la page 1
+if (!$pageActuelle || $pageActuelle < 1) {
+    $pageActuelle = 1;
+}
+
+// Compter tous les articles
+$requeteCount = $pdo->query(
+    "SELECT COUNT(*) FROM articles"
+);
+
+$totalArticles = (int) $requeteCount->fetchColumn();
+
+// Calculer le nombre total de pages
+$totalPages = (int) ceil(
+    $totalArticles / $articlesParPage
+);
+
+// Il faut au minimum une page
+if ($totalPages < 1) {
+    $totalPages = 1;
+}
+
+// Éviter une page qui n'existe pas
+if ($pageActuelle > $totalPages) {
+    $pageActuelle = $totalPages;
+}
+
+// Calculer le premier article à afficher
+$offset = ($pageActuelle - 1) * $articlesParPage;
+
 $sql = "
     SELECT 
         articles.id AS article_id,
@@ -21,14 +61,52 @@ $sql = "
         matches.lieu
     FROM articles
     JOIN matches
-    ON articles.match_id = matches.id
+        ON articles.match_id = matches.id
     ORDER BY articles.date_publication DESC
+    LIMIT :limite
+    OFFSET :depart
 ";
 
-$requete = $pdo->query($sql);
-$articles = $requete->fetchAll(PDO::FETCH_ASSOC);
+$requete = $pdo->prepare($sql);
 
+$requete->bindValue(
+    ':limite',
+    $articlesParPage,
+    PDO::PARAM_INT
+);
+
+$requete->bindValue(
+    ':depart',
+    $offset,
+    PDO::PARAM_INT
+);
+
+$requete->execute();
+
+$articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<?php if ($totalPages > 1) : ?>
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+
+            <?php for ($numero = 1; $numero <= $totalPages; $numero++) : ?>
+
+                <li class="page-item <?= $numero === $pageActuelle ? 'active' : '' ?>">
+                    <a
+                        class="page-link"
+                        href="/sport-news-crud/index.php?page=articles&p=<?= $numero ?>"
+                    >
+                        <?= $numero ?>
+                    </a>
+                </li>
+
+            <?php endfor; ?>
+
+        </ul>
+    </nav>
+
+<?php endif; ?>
 
 
      <?php
