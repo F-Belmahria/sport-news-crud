@@ -1,0 +1,4 @@
+reset_admin.php
+.env
+config/database.local.php
+*.log
